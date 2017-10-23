@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+	<!-- 设置系统参数 -->
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.ui.theme" value="simple"/>
+	<constant name="struts.action.extension" value="action,do,,"/>
+	<!-- 加载资源文件 -->
+	<constant name="struts.custom.i18n.resources" value="lable"/>
+	<!-- 设定默认地区语种 -->
+	<constant name="struts.locale" value="zh_CN"/>
+	
+	<!-- 设置Action -->
+	<package name="mytest" extends="json-default">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		
+		<!-- class -->
+		<action name="classAction_*" method="{1}" class="clsAction">
+			
+			<result name="doAddClass" type="redirect">/pages/addPages/addClass.jsp?msg=${msg}</result>
+			
+			<result name="deleteClass" type="redirect">classAction_findClassList?msg=${msg}</result>
+			
+			<result name="toUpdateClass">/pages/updatePages/updateClass.jsp</result>
+			<result name="doUpdateClass" type="redirect">classAction_findClassList?msg=${msg}</result>
+			
+			<result name="findClassList">/pages/showPages/classList.jsp</result>
+		</action>
+	
+		<!-- stu -->
+		<action name="stuAction_*" method="{1}" class="stuAction">
+			<result name="findClassList" type="json">
+				<param name="includeProperties">clsList.*</param>
+			</result>
+			
+			<result name="addStu" type="redirect">/pages/addPages/addStu.jsp?msg=${msg}</result>
+			
+			<result name="deleteStu" type="redirect">stuAction_findStuList?msg=${msg}</result>
+			
+			<result name="toUpdateStu">/pages/updatePages/updateStu.jsp</result>
+			<result name="doUpdateStu" type="redirect">stuAction_findStuList?msg=${msg}</result>
+			
+			<result name="findStuList">/pages/showPages/stuList.jsp</result>
+		</action>
+	</package>
+</struts>
